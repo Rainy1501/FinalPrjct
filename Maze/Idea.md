@@ -1,4 +1,4 @@
-# Ide final project
+# Idea for final project
 - Buat papan leaderboard.. masukin aja skor dummy beberapa
 - Di akhiran game bakal ditanya nama dan skor di akhir akan disimpan kayak di game arcade
 - Kustomisasi border dinding ataupun karakter menggunakan warna ataupun bmp.
