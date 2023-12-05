@@ -2,7 +2,7 @@
 - Buat papan leaderboard.. masukin aja skor dummy beberapa
 - Di akhiran game bakal ditanya nama dan skor di akhir akan disimpan kayak di game arcade
 - Kustomisasi border dinding ataupun karakter menggunakan warna ataupun bmp.
-- Buat level ampe 5
+- Buat level ampe 10
 - Maybe pilih mau karakter atau warna apa di awal-awal kali? :V
 - Gunakan time.h untuk memunculkan skor sesuai dengan waktu dan akurasi presisisi penyelesaian puzzle
 - Papan leaderboard menggunakan ascending functiom
