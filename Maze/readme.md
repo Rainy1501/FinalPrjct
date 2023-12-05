@@ -1,1 +1,17 @@
-
+# Ide final project
+- Buat papan leaderboard.. masukin aja skor dummy beberapa
+- Di akhiran game bakal ditanya nama dan skor di akhir akan disimpan kayak di game arcade
+- Kustomisasi border dinding ataupun karakter menggunakan warna ataupun bmp.
+- Buat level ampe 5
+- Maybe pilih mau karakter atau warna apa di awal-awal kali? :V
+- Gunakan time.h untuk memunculkan skor sesuai dengan waktu dan akurasi presisisi penyelesaian puzzle
+- Papan leaderboard menggunakan ascending functiom
+- Gunakan windows.h untuk membuat loading icak icak :V
+- Maybe pake koin kalau mau beli skin?
+- Coba usahakan kustomisasi latar belakang dari game
+- Buat gelap jika sebuah player berada 2 garis lebih jauh dari dinding
+- Di awal game buat panduan untuk memainkan game seperti kontrolnya dan cara mengakhirinya, masukin ke bagian menu maybe?
+- Di awal awal buat kayak semacam "Tekan Enter untuk Memulai Game" dibuat blink blink kayak di game retro jadul 
+- Untuk resolusi windowsnya janlup disesuain sama ukuran labirin/mazenya
+- Buat sistem currency untuk membeli skin baru
+- Tambahin backsound kalau bisa :V
