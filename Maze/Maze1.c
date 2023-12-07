@@ -43,7 +43,7 @@ void printMaze(int maze[SIZE][SIZE], int playerX, int playerY) {
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
             if (i == playerY && j == playerX) {
-                printf("P "); // Player marker
+                printf(ANSI_COLOR_CYAN "P " ANSI_COLOR_RESET); // Player marker
             } else if (maze[i][j] == 1) {
                 printf(ANSI_COLOR_GREEN "# " ANSI_COLOR_RESET); // Wall
             } else {
@@ -55,12 +55,12 @@ void printMaze(int maze[SIZE][SIZE], int playerX, int playerY) {
 
     // Display control instructions under the game screen
     gotoxy(0, SIZE + 2);
-    printf("Controls:\n");
+    printf(ANSI_COLOR_MAGENTA "Controls:\n");
     printf("W - Move Up\n");
     printf("S - Move Down\n");
     printf("A - Move Left\n");
     printf("D - Move Right\n");
-    printf("Q - Quit\n");
+    printf("Q - Quit\n" ANSI_COLOR_RESET);
 }
 
 // Function to play the game
@@ -107,7 +107,7 @@ void playMazeGame(int maze[SIZE][SIZE], int level) {
         }
     }
 
-    printf("Congratulations! You reached the exit of level %d!\n", level + 1);
+    printf(ANSI_COLOR_YELLOW "Congratulations! You reached the exit of level %d!\n"ANSI_COLOR_RESET , level + 1 );
     getch();
     system("cls");
 }
@@ -115,21 +115,21 @@ void playMazeGame(int maze[SIZE][SIZE], int level) {
 int main() {
     PlaySound(TEXT("welcome.wav"), NULL, SND_FILENAME);
     system("cls");
-    printf("Now Loading");
+    printf(ANSI_COLOR_RED "Now Loading" ANSI_COLOR_RESET);
     Sleep(500);
-    printf(". ");
+    printf(ANSI_COLOR_YELLOW ". " ANSI_COLOR_RESET);
     Sleep(500);
-    printf(". ");
+    printf(ANSI_COLOR_GREEN ". " ANSI_COLOR_RESET);
     Sleep(500);
-    printf(". ");
+    printf(ANSI_COLOR_MAGENTA ". " ANSI_COLOR_RESET);
     Sleep(500);
-    printf(". ");
+    printf(ANSI_COLOR_BLUE ". " ANSI_COLOR_RESET);
     Sleep(500);
     printf(".\n");
 
     system("cls");
     printf(ANSI_COLOR_RED "Welcome to the Maze Game!\n" ANSI_COLOR_RESET);
-    printf("Press any key to start...");
+    printf(ANSI_COLOR_GREEN "Press any key to start..." ANSI_COLOR_RESET);
 
     getch(); // wait for a key press
     system("cls"); // clear the system output
@@ -180,7 +180,7 @@ int main() {
         system("cls");
     }
 
-    printf("Congratulations! You have completed all levels!\n");
+    printf(ANSI_COLOR_CYAN "Congratulations! You have completed all levels!\n" ANSI_COLOR_RESET);
     PlaySound(TEXT("Welldone.wav"), NULL, SND_FILENAME);
     PlaySound(TEXT("Victory.wav"), NULL, SND_FILENAME);
 
