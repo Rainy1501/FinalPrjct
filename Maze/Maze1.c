@@ -3,9 +3,11 @@
 #include <conio.h> 
 #include <windows.h>
 #include <time.h>
+#include <string.h>
 
 #define SIZE 10
 #define NUM_LEVELS 3 // Number of levels in the game
+#define MAX_PLAYERS 20 // Maximum number of players on the leaderboard
 
 // ANSI color codes
 #define ANSI_COLOR_BLACK     "\x1b[30m"
@@ -29,6 +31,11 @@
 
 #define SIZE 10
 
+typedef struct {
+	char playerName[30];
+	int score;
+} Player; 
+
 // Function to set cursor position in console
 void gotoxy(int x, int y) {
     COORD coord;
@@ -38,7 +45,7 @@ void gotoxy(int x, int y) {
 }
 
 // Function to print the maze
-void printMaze(int maze[SIZE][SIZE], int playerX, int playerY) {
+void printMaze(int maze[SIZE][SIZE], int playerX, int playerY, int score) {
     gotoxy(0, 0); // Set cursor position to the top-left corner of the console
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
@@ -61,15 +68,21 @@ void printMaze(int maze[SIZE][SIZE], int playerX, int playerY) {
     printf("A - Move Left\n");
     printf("D - Move Right\n");
     printf("Q - Quit\n" ANSI_COLOR_RESET);
+    
+    // Display score
+    printf("\nScore: %d\n", score);
 }
 
 // Function to play the game
-void playMazeGame(int maze[SIZE][SIZE], int level) {
+void playMazeGame(int maze[SIZE][SIZE], int level, int* totalScore) {
     int playerX = 0, playerY = 0;
     int exitX = SIZE - 1, exitY = SIZE - 1;
+    int moves = 0; // Variable to count moves
+    int score = 0; // Initialize score
+    clock_t startTime = clock(); // Start time
 
     while (playerX != exitX || playerY != exitY) {
-        printMaze(maze, playerX, playerY);
+        printMaze(maze, playerX, playerY, *totalScore); // Display the maze and current score
 
         char move = getch();
 
@@ -104,15 +117,78 @@ void playMazeGame(int maze[SIZE][SIZE], int level) {
         if (newX >= 0 && newX < SIZE && newY >= 0 && newY < SIZE && maze[newY][newX] == 0) {
             playerX = newX;
             playerY = newY;
+            moves++; // Increment move count on valid move
         }
     }
+	
+	clock_t endTime = clock(); // End time
+    double timeTaken = ((double)(endTime - startTime)) / CLOCKS_PER_SEC; // Calculate time taken in seconds
 
     printf(ANSI_COLOR_YELLOW "Congratulations! You reached the exit of level %d!\n"ANSI_COLOR_RESET , level + 1 );
+    printf("Total moves: %d\n", moves);
+	printf("Time taken: %.2f seconds\n" ANSI_COLOR_RESET, timeTaken);
+	
+    // Calculate score based on time and moves (a simple formula)
+    score = 1000 - (moves * 10) - (int)(timeTaken * 10);
+    if (score < 0) {
+        score = 0; // Ensure the score is non-negative
+    }
+    printf("Your score for level %d: %d\n", level + 1, score);
+    
+    // Add current level's score to the total score
+    *totalScore += score;
+
+    // Pass the score to the printMaze function
+    printMaze(maze, playerX, playerY, *totalScore);
+
     getch();
     system("cls");
 }
 
+// Function to display leaderboard
+void displayLeaderboard(Player leaderboard[]) {
+    system("cls");
+    printf(ANSI_COLOR_YELLOW "*** Leaderboard ***\n\n");
+    printf("Rank\tPlayer Name\tScore\n");
+
+    for (int i = 0; i < MAX_PLAYERS; i++) {
+        printf("%d.\t%s\t\t%d\n", i + 1, leaderboard[i].playerName, leaderboard[i].score);
+    }
+}
+
+void saveLeaderboard(Player leaderboard[]) {
+    FILE *file;
+    file = fopen("leaderboard.txt", "w");
+    if (file != NULL) {
+        for (int i = 0; i < MAX_PLAYERS; i++) {
+            fprintf(file, "%s %d\n", leaderboard[i].playerName, leaderboard[i].score);
+        }
+        fclose(file);
+    } else {
+        printf("Error opening file for writing.\n");
+    }
+}
+
+// Function to load the leaderboard from a file
+void loadLeaderboard(Player leaderboard[]) {
+    FILE *file;
+    file = fopen("leaderboard.txt", "r");
+    if (file != NULL) {
+        for (int i = 0; i < MAX_PLAYERS; i++) {
+            fscanf(file, "%s %d\n", leaderboard[i].playerName, &leaderboard[i].score);
+        }
+        fclose(file);
+    } else {
+        printf("File does not exist or could not be opened.\n");
+    }
+}
+
+
 int main() {
+	int totalScore = 0; // Initialize total score
+	Player leaderboard[MAX_PLAYERS] = { 0 }; // Initialize leaderboard array
+	loadLeaderboard(leaderboard); // Load the previous leaderboard
+
     PlaySound(TEXT("welcome.wav"), NULL, SND_FILENAME);
     system("cls");
     printf(ANSI_COLOR_RED "Now Loading" ANSI_COLOR_RESET);
@@ -176,13 +252,40 @@ int main() {
     };
 
     for (int i = 0; i < NUM_LEVELS; i++) {
-        playMazeGame(levels[i], i);
+        playMazeGame(levels[i], i, &totalScore);
         system("cls");
     }
 
     printf(ANSI_COLOR_CYAN "Congratulations! You have completed all levels!\n" ANSI_COLOR_RESET);
+    printf("Total Score for all levels: %d\n", totalScore);
     PlaySound(TEXT("Welldone.wav"), NULL, SND_FILENAME);
     PlaySound(TEXT("Victory.wav"), NULL, SND_FILENAME);
+    
+    printf("Enter your name for the leaderboard: ");
+    char playerName[50];
+    fgets(playerName, sizeof(playerName), stdin);
+    playerName[strcspn(playerName, "\n")] = '\0'; // Remove the newline character from playerName
+    
+    // Find the position to insert the current player's score
+    int insertPosition = -1;
+    for (int i = MAX_PLAYERS - 1; i >= 0; i--) {
+        if (totalScore > leaderboard[i].score) {
+            insertPosition = i;
+        }
+    }
+    
+    // Shift the existing scores to make space for the current player's score
+    if (insertPosition != -1) {
+        for (int i = MAX_PLAYERS - 1; i > insertPosition; i--) {
+            strcpy(leaderboard[i].playerName, leaderboard[i - 1].playerName);
+            leaderboard[i].score = leaderboard[i - 1].score;
+        }
+        strcpy(leaderboard[insertPosition].playerName, playerName);
+        leaderboard[insertPosition].score = totalScore;
+    }
+    
+    displayLeaderboard(leaderboard); // Display the leaderboard after adding the player's score
+    saveLeaderboard(leaderboard); // Save the updated leaderboard to the file
 
     return 0;
 }
