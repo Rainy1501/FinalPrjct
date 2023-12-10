@@ -6,7 +6,7 @@
 #include <string.h>
 
 #define SIZE 10
-#define NUM_LEVELS 3 // Number of levels in the game
+#define NUM_LEVELS 10 // Number of levels in the game
 #define MAX_PLAYERS 20 // Maximum number of players on the leaderboard
 
 // ANSI color codes
@@ -35,6 +35,14 @@ typedef struct {
 	char playerName[30];
 	int score;
 } Player; 
+
+void displayMainMenu() {
+    system("cls");
+    printf(ANSI_COLOR_CYAN "Welcome to the Maze Game!\n" ANSI_COLOR_RESET);
+    printf("1. Play\n");
+    printf("2. View Leaderboard\n");
+    printf("3. Exit\n");
+}
 
 // Function to set cursor position in console
 void gotoxy(int x, int y) {
@@ -184,6 +192,7 @@ void loadLeaderboard(Player leaderboard[]) {
 }
 
 
+
 int main() {
 	int totalScore = 0; // Initialize total score
 	Player leaderboard[MAX_PLAYERS] = { 0 }; // Initialize leaderboard array
@@ -212,80 +221,188 @@ int main() {
     PlaySound(TEXT("Start.wav"), NULL, SND_FILENAME);
     PlaySound(TEXT("music.wav"), NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 
-    int levels[NUM_LEVELS][SIZE][SIZE] = {
-        { // Level 1
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 1, 1, 1, 1, 0, 1},
-            {1, 1, 1, 0, 1, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 0, 1, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 0, 1, 0},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
-        },
-        { // Level 2
-            {0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-            {1, 0, 1, 1, 1, 1, 0, 1, 0, 1},
-            {1, 0, 1, 0, 0, 0, 0, 1, 0, 1},
-            {1, 1, 1, 0, 1, 1, 1, 1, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
-        },
-        { // Level 3
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 1, 1, 1, 1, 0, 1},
-            {1, 1, 1, 0, 1, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 1, 1, 1, 1},
-            {1, 1, 1, 1, 1, 0, 1, 0, 0, 0},
-            {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-            {1, 1, 1, 1, 1, 1, 1, 0, 1, 0},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
-        }
-    };
+    int choice;
+    do {
+        displayMainMenu();
+        printf("Enter your choice (1-3): ");
+        scanf("%d", &choice);
+        fflush(stdin);
 
-    for (int i = 0; i < NUM_LEVELS; i++) {
-        playMazeGame(levels[i], i, &totalScore);
-        system("cls");
-    }
+        switch (choice) {
+            case 1:
+                system("cls");
+                    int levels[NUM_LEVELS][SIZE][SIZE] = {
+                    { // Level 1
+                    {0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    {0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 1, 1, 1, 1, 0, 1},
+                    {1, 1, 1, 0, 1, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+                    {1, 1, 1, 1, 1, 0, 1, 0, 0, 1},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                    {1, 1, 1, 1, 1, 1, 1, 0, 1, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
+                },
+                    { // Level 2
+                    {0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
+                    {1, 0, 0, 0, 0, 0, 0, 1, 0, 1},
+                    {1, 0, 1, 1, 1, 1, 0, 1, 0, 1},
+                    {1, 0, 1, 0, 0, 0, 0, 1, 0, 1},
+                    {1, 1, 1, 0, 1, 1, 1, 1, 0, 1},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
+                },
+                    { // Level 3
+                    {0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    {0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 1, 1, 1, 1, 0, 1},
+                    {1, 1, 1, 0, 1, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+                    {1, 1, 1, 1, 1, 0, 1, 0, 0, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                    {1, 1, 1, 1, 1, 1, 1, 0, 1, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
+                },
+                    { // Level 4
+                    {0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    {0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 1, 1, 1, 1, 0, 1},
+                    {1, 1, 1, 0, 1, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+                    {1, 1, 1, 1, 1, 0, 1, 0, 0, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                    {1, 1, 1, 1, 1, 1, 1, 0, 1, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
+                },
+                    { // Level 5
+                    {0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    {0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 1, 1, 1, 1, 0, 1},
+                    {1, 1, 1, 0, 1, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+                    {1, 1, 1, 1, 1, 0, 1, 0, 0, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                    {1, 1, 1, 1, 1, 1, 1, 0, 1, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
+                },
+                    { // Level 6
+                    {0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    {0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 1, 1, 1, 1, 0, 1},
+                    {1, 1, 1, 0, 1, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+                    {1, 1, 1, 1, 1, 0, 1, 0, 0, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                    {1, 1, 1, 1, 1, 1, 1, 0, 1, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
+                },
+                    { // Level 7
+                    {0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    {0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 1, 1, 1, 1, 0, 1},
+                    {1, 1, 1, 0, 1, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+                    {1, 1, 1, 1, 1, 0, 1, 0, 0, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                    {1, 1, 1, 1, 1, 1, 1, 0, 1, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
+                },
+                    { // Level 8
+                    {0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    {0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 1, 1, 1, 1, 0, 1},
+                    {1, 1, 1, 0, 1, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+                    {1, 1, 1, 1, 1, 0, 1, 0, 0, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                    {1, 1, 1, 1, 1, 1, 1, 0, 1, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
+                },
+                    { // Level 9
+                    {0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    {0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 1, 1, 1, 1, 0, 1},
+                    {1, 1, 1, 0, 1, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+                    {1, 1, 1, 1, 1, 0, 1, 0, 0, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                    {1, 1, 1, 1, 1, 1, 1, 0, 1, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
+                },
+                    { // Level 10
+                    {0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                    {0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 1, 1, 1, 1, 0, 1},
+                    {1, 1, 1, 0, 1, 0, 0, 0, 0, 1},
+                    {1, 0, 0, 0, 0, 0, 1, 1, 1, 1},
+                    {1, 1, 1, 1, 1, 0, 1, 0, 0, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+                    {1, 1, 1, 1, 1, 1, 1, 0, 1, 0},
+                    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
+                }
+        };
 
-    printf(ANSI_COLOR_CYAN "Congratulations! You have completed all levels!\n" ANSI_COLOR_RESET);
-    printf("Total Score for all levels: %d\n", totalScore);
-    PlaySound(TEXT("Welldone.wav"), NULL, SND_FILENAME);
-    PlaySound(TEXT("Victory.wav"), NULL, SND_FILENAME);
-    
-    printf("Enter your name for the leaderboard: ");
-    char playerName[50];
-    fgets(playerName, sizeof(playerName), stdin);
-    playerName[strcspn(playerName, "\n")] = '\0'; // Remove the newline character from playerName
-    
-    // Find the position to insert the current player's score
-    int insertPosition = -1;
-    for (int i = MAX_PLAYERS - 1; i >= 0; i--) {
-        if (totalScore > leaderboard[i].score) {
-            insertPosition = i;
+        for (int i = 0; i < NUM_LEVELS; i++) {
+            playMazeGame(levels[i], i, &totalScore);
+            system("cls");
         }
-    }
+
+        printf(ANSI_COLOR_CYAN "Congratulations! You have completed all levels!\n" ANSI_COLOR_RESET);
+        printf("Total Score for all levels: %d\n", totalScore);
+        PlaySound(TEXT("Welldone.wav"), NULL, SND_FILENAME);
+        PlaySound(TEXT("Victory.wav"), NULL, SND_FILENAME);
     
-    // Shift the existing scores to make space for the current player's score
-    if (insertPosition != -1) {
-        for (int i = MAX_PLAYERS - 1; i > insertPosition; i--) {
-            strcpy(leaderboard[i].playerName, leaderboard[i - 1].playerName);
-            leaderboard[i].score = leaderboard[i - 1].score;
+        printf("Enter your name for the leaderboard: ");
+        char playerName[50];
+        fgets(playerName, sizeof(playerName), stdin);
+        playerName[strcspn(playerName, "\n")] = '\0'; // Remove the newline character from playerName
+    
+        // Find the position to insert the current player's score
+        int insertPosition = -1;
+        for (int i = MAX_PLAYERS - 1; i >= 0; i--) {
+            if (totalScore > leaderboard[i].score) {
+                insertPosition = i;
+            }
         }
-        strcpy(leaderboard[insertPosition].playerName, playerName);
-        leaderboard[insertPosition].score = totalScore;
-    }
     
-    displayLeaderboard(leaderboard); // Display the leaderboard after adding the player's score
-    saveLeaderboard(leaderboard); // Save the updated leaderboard to the file
+        // Shift the existing scores to make space for the current player's score
+        if (insertPosition != -1) {
+            for (int i = MAX_PLAYERS - 1; i > insertPosition; i--) {
+                strcpy(leaderboard[i].playerName, leaderboard[i - 1].playerName);
+                leaderboard[i].score = leaderboard[i - 1].score;
+            }
+            strcpy(leaderboard[insertPosition].playerName, playerName);
+            leaderboard[insertPosition].score = totalScore;
+        }
+    
+        displayLeaderboard(leaderboard); // Display the leaderboard after adding the player's score
+        saveLeaderboard(leaderboard); // Save the updated leaderboard to the fil
+                break;
+            case 2:
+                displayLeaderboard(leaderboard);
+                printf("\nPress any key to return to the main menu...");
+                getch();
+                break;
+            case 3:
+                printf("Exiting the game...\n");
+                break;
+            default:
+                printf("Invalid choice. Please enter a number between 1 and 3.\n");
+                break;
+        }
+    } while (choice != 3);
 
     return 0;
 }
