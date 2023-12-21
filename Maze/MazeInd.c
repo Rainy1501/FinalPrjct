@@ -42,7 +42,8 @@ void TampilanUtama() {
     printf("|1. Mulai Permainan          |\n"); 
     printf("|2. Liat Papan Peringkat     |\n"); 
     printf("|3. Keluar                   |\n" ); 
-    printf("==============================\n"WARNA_RESET);
+    printf("==============================\n\n"WARNA_RESET);
+    printf(WARNA_MERAH"Dibuat oleh: Fattan Naufan Islami\n\n"WARNA_RESET);
 }
 
 // Fungsi untuk meletakkan posisi kursor pada konsol atau command promt (CMD)
@@ -349,7 +350,7 @@ int main() { // Fungsi utama
     
     do { // Looping untuk menampilkan menu utama
         TampilanUtama(); // Menampilkan menu utama
-        printf(WARNA_MERAH"Masukkan pilihanmu (1-3): "WARNA_RESET); // Menampilkan pesan untuk memilih menu
+        printf(WARNA_HIJAU"Masukkan pilihanmu (1-3): "WARNA_RESET); // Menampilkan pesan untuk memilih menu
         scanf("%d", &pilihan); // Mengambil input dari user
         fflush(stdin); // Membersihkan input buffer
         
