@@ -11,7 +11,7 @@ Prodi : Informatika
 #include <string.h>
 
 #define UKURAN 10 // Ukuran dari maze
-#define JMLH_LVL 5 // Jumlah dari level di game
+#define JMLH_LVL 5 // Jumlah dari Tingkat di game
 #define SKORPemain 20 // Jumlah maksimum dari pemain di papan skor
 
 // Kode warna dari ANSI
@@ -107,19 +107,19 @@ void TampilanMaze(int maze[UKURAN][UKURAN], int PemainX, int PemainY, int skor, 
 }
 
 // Fungsi untuk bermain game
-void PermainanMaze(int level[JMLH_LVL][UKURAN][UKURAN], int* totalskor, Pemain papanperingkat[]) { // Mengambil level array, skor total, dan papan peringkat sebagai parameter
-    int skor = 0; // Inisiialisasi skor untuk level saat ini
+void PermainanMaze(int Level[JMLH_LVL][UKURAN][UKURAN], int* totalskor, Pemain papanperingkat[]) { // Mengambil Level array, skor total, dan papan peringkat sebagai parameter
+    int skor = 0; // Inisiialisasi skor untuk Tingkat saat ini
     clock_t WaktuMulai, endTime; // Inisiialisasi waktu mulai dan waktu selesai
-    double WaktuBerlalu; // Inisialisasi waktu yang dibutuhkan untuk menyelesaikan level saat ini
+    double WaktuBerlalu; // Inisialisasi waktu yang dibutuhkan untuk menyelesaikan Tingkat saat ini
 
-    for (int level = 0; level < JMLH_LVL; level++) { // Looping untuk setiap level
+    for (int Tingkat = 0; Tingkat < JMLH_LVL; Tingkat++) { // Looping untuk setiap Tingkat
         int PemainX = 0, PemainY = 0; // Inisialisasi posisi pemain
         int KeluarX = UKURAN - 1, KeluarY = UKURAN - 1; // Inisiialisasi posisi Keluar
         int Gerakan = 0; // Variabel untuk menghitung gerakan pemain
-        clock_t WaktuMulai = clock(); // Memulai waktu untuk level
+        clock_t WaktuMulai = clock(); // Memulai waktu untuk Tingkat
 
         while (PemainX != KeluarX || PemainY != KeluarY) { // Looping untuk setiap gerakan pemain
-            TampilanMaze(level[level], PemainX, PemainY, *totalskor, WaktuMulai); // Menampilkan maze, pemain, dan skor
+            TampilanMaze(Level[Tingkat], PemainX, PemainY, *totalskor, WaktuMulai); // Menampilkan maze, pemain, dan skor
         	char Gerak = getch(); // Mengambil input dari user berdasarkan tombol yang ditekan
             int PosisiX = PemainX, PosisiY = PemainY; // Inisiialisasi posisi baru pemain
 
@@ -149,15 +149,15 @@ void PermainanMaze(int level[JMLH_LVL][UKURAN][UKURAN], int* totalskor, Pemain p
                     continue;
             }
 
-            if (PosisiX >= 0 && PosisiX < UKURAN && PosisiY >= 0 && PosisiY < UKURAN && level[level][PosisiY][PosisiX] == 0) {  // Jika gerakan pemain valid
+            if (PosisiX >= 0 && PosisiX < UKURAN && PosisiY >= 0 && PosisiY < UKURAN && Level[Tingkat][PosisiY][PosisiX] == 0) {  // Jika gerakan pemain valid
                 PemainX = PosisiX;  // Memindahkan pemain ke posisi baru
                 PemainY = PosisiY;  // Memindahkan pemain ke posisi baru
                 Gerakan++; // Menambahkan hitungan gerakan yang valid
             }
         }
 
-        clock_t endTime = clock(); // Menghentikan waktu untuk level
-        WaktuBerlalu = ((double)(endTime - WaktuMulai)) / CLOCKS_PER_SEC; // Kalkulasikan waktu yang dibutuhkan untuk menyelesaikan level
+        clock_t endTime = clock(); // Menghentikan waktu untuk Tingkat
+        WaktuBerlalu = ((double)(endTime - WaktuMulai)) / CLOCKS_PER_SEC; // Kalkulasikan waktu yang dibutuhkan untuk menyelesaikan Tingkat
 
         // Mengkalkulasi skor berdasarkan waktu dan gerakan (rumus sederhana)
         skor = 1000 - (Gerakan * 10) - (int)(WaktuBerlalu * 10);
@@ -169,20 +169,20 @@ void PermainanMaze(int level[JMLH_LVL][UKURAN][UKURAN], int* totalskor, Pemain p
         *totalskor += skor;
 
         // Mengoper skor ke fungsi TampilanMaze
-        TampilanMaze(level[level], PemainX, PemainY, *totalskor, WaktuMulai);
+        TampilanMaze(Level[Tingkat], PemainX, PemainY, *totalskor, WaktuMulai);
     
-        printf(WARNA_KUNING "Selamat! Kamu sudah mencapai jalan keluar dari level %d!\n" WARNA_RESET, level + 1); // Menampilkan pesan saat menyelesaikan level saat ini
-        printf(WARNA_SIAN"Jumlah Gerakan : %d\n", Gerakan); // Menampilkan jumlah gerakan yang dibutuhkan untuk menyelesaikan level saat ini
-        printf("Waktu dibutuhkan : %.2f seconds\n", WaktuBerlalu); // Menampilkan waktu yang dibutuhkan untuk menyelesaikan level saat ini
-        printf("Skor kamu di level %d ialah : %d\n"WARNA_RESET, level + 1, skor); // Menampilkan skor pemain saat ini
-        printf(WARNA_HIJAU"Tekan tombol apapun untuk melanjutkan ke level selanjutnya...\n"WARNA_RESET); // Menampilkan pesan untuk melanjutkan ke level selanjutnya
+        printf(WARNA_KUNING "Selamat! Kamu sudah mencapai jalan keluar dari Tingkat %d!\n" WARNA_RESET, Tingkat + 1); // Menampilkan pesan saat menyelesaikan Tingkat saat ini
+        printf(WARNA_SIAN"Jumlah Gerakan : %d\n", Gerakan); // Menampilkan jumlah gerakan yang dibutuhkan untuk menyelesaikan Tingkat saat ini
+        printf("Waktu dibutuhkan : %.2f seconds\n", WaktuBerlalu); // Menampilkan waktu yang dibutuhkan untuk menyelesaikan Tingkat saat ini
+        printf("Skor kamu di Tingkat %d ialah : %d\n"WARNA_RESET, Tingkat + 1, skor); // Menampilkan skor pemain saat ini
+        printf(WARNA_HIJAU"Tekan tombol apapun untuk melanjutkan ke Tingkat selanjutnya...\n"WARNA_RESET); // Menampilkan pesan untuk melanjutkan ke Tingkat selanjutnya
         getch();
 
         system("cls");
     }
 
     printf(WARNA_SIAN "Selamat! Kamu sudah menamatkan semua tantangan\n" WARNA_RESET);
-    printf("Total skor dari semua level : %d\n", *totalskor); // Menampilkan skor total
+    printf("Total skor dari semua Tingkat : %d\n", *totalskor); // Menampilkan skor total
     PlaySound(TEXT("Welldone.wav"), NULL, SND_FILENAME); // Memainkan suara saat menyelesaikan permainan
     PlaySound(TEXT("Victory.wav"), NULL, SND_FILENAME); // Memainkan suara saat menyelesaikan permainan
 
@@ -258,8 +258,8 @@ int main() { // Fungsi utama
 	Pemain papanperingkat[SKORPemain] = { 0 }; // Inisiialisasi papan peringkat
 	MemuatPapanPeringkat(papanperingkat); // Memuat papan peringkat sebelumnya dari file
 
-    int level[JMLH_LVL][UKURAN][UKURAN] = { // Inisiialisasi maze
-                    { // Level 1
+    int Level[JMLH_LVL][UKURAN][UKURAN] = { // Inisiialisasi maze
+                    { // Tingkat 1
                     {0, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                     {0, 0, 1, 0, 0, 0, 0, 0, 0, 1},
                     {1, 0, 0, 0, 1, 1, 1, 1, 0, 1},
@@ -271,7 +271,7 @@ int main() { // Fungsi utama
                     {1, 0, 0, 0, 0, 0, 0, 0, 1, 0},
                     {1, 1, 1, 1, 1, 1, 1, 0, 0, 0}
                 },
-                    { // Level 2
+                    { // Tingkat 2
                     {0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
@@ -283,7 +283,7 @@ int main() { // Fungsi utama
                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
                 },
-                    { // Level 3
+                    { // Tingkat 3
                     {0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
@@ -295,7 +295,7 @@ int main() { // Fungsi utama
                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
                 }, 
-                    { // Level 4
+                    { // Tingkat 4
                     {0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
@@ -307,7 +307,7 @@ int main() { // Fungsi utama
                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 0}
                 },
-                    { // Level 5
+                    { // tingkat 5
                     {0, 0, 1, 1, 1, 1, 1, 1, 1, 1},
                     {0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
@@ -355,7 +355,7 @@ int main() { // Fungsi utama
         switch (pilihan) { // Switch case untuk setiap pilihan menu
             case 1:
                 system("cls"); // Membersihkan konsol atau tampilan Command Promt (CMD)
-                PermainanMaze(level, &totalskor, papanperingkat); // Pass level array to the PermainanMaze function
+                PermainanMaze(Level, &totalskor, papanperingkat); // Pass Level array to the PermainanMaze function
                 TampilanPapanPeringkat(papanperingkat); // Melihatkan papan peringkat setelah permainan selesai
     			getch(); // Menunggu user untuk menekan tombol apapun
     			SimpanPapanPeringkat(papanperingkat); // Menyimpan papan peringkat yang telah diperbarui ke file
