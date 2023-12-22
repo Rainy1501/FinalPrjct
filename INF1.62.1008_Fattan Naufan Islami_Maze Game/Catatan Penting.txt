@@ -1,0 +1,5 @@
+Tata cara menjalankan source code C Game Maze
+1.Masukkanlah kumpulan file di dalam Suara_Maze Game dan Papan Peringkat_Maze Game menuju ke Source Code_Maze Game agar permainan bisa berjalan dengan benar
+2.Jangan lupa untuk menyesuaikan settingan compiler dengan foto settingan compiler yang sudah saya berikan juga.
+
+Have Fun :D
